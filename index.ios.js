@@ -92,7 +92,7 @@ class NextFerry extends Component {
   renderLocation() {
     width = Dimensions.get('window').width; //full width
     height = Dimensions.get('window').height; //full height
-    var sched = this.state.schedule;
+    var sched = this.state.schedule.response;
     var departingTimeRaw = JSON.stringify(sched["times"][0]["DepartingTime"]).split('T');
     var departingTimeObj = date.parse(departingTimeRaw[1], 'HH:mm:ss') 
     var departingTime = date.format(departingTimeObj, 'hh:mm A');

@@ -1,1 +1,12 @@
+
+# Android
+.idea
+.gradle
+local.properties
+android/app/build/
+android/build/intermediates/
+*.iml
+
+# node.js
 node_modules/
+

@@ -1,7 +1,7 @@
 package com.nextferry;
 
 import com.facebook.react.ReactActivity;
-import com.AirMaps.AirPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
@@ -36,7 +36,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new AirPackage()
+            new MapsPackage()
         );
     }
 }
