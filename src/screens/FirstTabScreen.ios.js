@@ -42,7 +42,6 @@ export default class FirstTabScreen extends Component {
 
   componentDidMount() {
       this.getData();
-      
   }
   getData()
   {

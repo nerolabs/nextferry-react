@@ -1,6 +1,6 @@
-import React, {
+import React, { Component } from 'react';
+import {
   AppRegistry,
-  Component,
   View
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -13,17 +13,17 @@ registerScreens();
 
 AppRegistry.registerComponent('App', () => App);
 
-export default class App extends React.Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
-    store.subscribe(this.onStoreUpdate.bind(this));
-    store.dispatch(appActions.appInitialized());
+    // store.subscribe(this.onStoreUpdate.bind(this));
+    // store.dispatch(appActions.appInitialized());
   }
 
 
   render() {
     return (
-      <View />
+        <View />
     );
   }
 }
