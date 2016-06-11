@@ -4,11 +4,11 @@
 //    Update FirstTabScreen on SecondTabScreen Select
 //
 
-var REQUEST_URL = 'http://ec2-54-186-56-115.us-west-2.compute.amazonaws.com/v0/ferry';
+// var REQUEST_URL = 'http://ec2-54-186-56-115.us-west-2.compute.amazonaws.com/v0/ferry';
+var REQUEST_URL = 'http://10.0.2.2:8087/v0/ferry';
 
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import {
-  AppRegistry,
   Dimensions,
   Image,
   StyleSheet,
@@ -37,7 +37,7 @@ export default class FirstTabScreen extends Component {
       schedule: null,
       preferredRoute: 14 // TODO: Examine how to leverage default preferredRoute.
     };
-    
+
     // Unsure if this is implemented in Android.
     //this.props.navigator.toggleTabs({to: 'hidden'})
   }
@@ -49,7 +49,7 @@ export default class FirstTabScreen extends Component {
     return new Promise(function(resolve, reject){
       AsyncStorage.getItem("preferredRoute").then((value) => {
         if(!value){
-          reject(Error(req.statusText));
+          reject({"error" : Error("Async Key Not Found"), that});
         }
         resolve({value, that});
       });
@@ -104,7 +104,6 @@ export default class FirstTabScreen extends Component {
   }
 
   componentWillMount() {
-    this.props.navigator.testTitle({"title":"test", "screen" : "example.FirstTabScreen"});
     console.log("componentWillMount");
     if(!this.state.ranOnce && (!this.state.runCount || this.state.runCount != 1)){
       this.state.runCount = 1;
@@ -116,8 +115,10 @@ export default class FirstTabScreen extends Component {
 
           }, function(error){
 
-            console.log("error", error);
+            console.log("error", error.error);
 
+
+            return error.that.getData({"value" : 14, "that" : error.that});
           })
           .then(function(response){
 
