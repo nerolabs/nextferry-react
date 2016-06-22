@@ -1,5 +1,12 @@
-import React, { Component } from 'react';
+//
+//  TODO: 
+//
+//    Fix all of the whitespacing issues.
+//    Fix all of my tabbing issues.
+//    Choose a consistent bracket convention.
+//
 
+import React, { Component, PropTypes } from 'react';
 import {
   Text,
   View,
@@ -11,6 +18,9 @@ import {
   AsyncStorage,
   Alert
 } from 'react-native';
+
+import { connect } from 'react-redux';
+import * as storedRouteActions from '../reducers/storedRoute/actions';
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -30,7 +40,8 @@ var SUPPORTED_ROUTES = {
   bremerton:  { name: 'Seattle / Bremerton', id: 3 },
 };
 
-export default class SecondTabScreen extends Component {
+class SecondTabScreen extends Component {
+  // TODO: Figure out if this is doing anything?
   static navigatorStyle = {
     drawUnderTabBar: true
   };
@@ -41,10 +52,11 @@ export default class SecondTabScreen extends Component {
     //this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     this._onSaveRoute = this._onSaveRoute.bind(this)
     this.state = {
-      preferredRoute: 0,
+      preferredRoute: parseInt(this.props.storedRoute.preferredRoute),
     };
     AsyncStorage.getItem("preferredRoute").then((value) => {
-            this.setState({"preferredRoute": value});        }).done();
+      this.setState({"preferredRoute": parseInt(value)});
+    }).done();
   }
   onNavigatorEvent(event) {
     if (event.id == 'menu') {
@@ -54,6 +66,25 @@ export default class SecondTabScreen extends Component {
       });
     }
   }
+  
+  componentWillReceiveProps(nextProps){
+    // TODO:  This is working, but I am not sure if this is the best.
+    if(nextProps.storedRoute.preferredRoute != this.state.preferredRoute)
+    {
+      this.setState({
+        "preferredRoute" : nextProps.storedRoute.preferredRoute
+      });
+    }
+    // TODO: I am not confident this return statement is even required or doing something.
+    return true;
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    // TODO:  This is not doing anything at all. I know I need to utilize this to improve performance.
+    //        Leaving this in as a reminder to come back and properly set this function up.
+    return true;
+  }
+
   render() {
     return (
        <View>
@@ -78,21 +109,23 @@ export default class SecondTabScreen extends Component {
       </View></View>
     );
   }
+
   saveData(value) {
-        // AsyncStorage.setItem("preferredRoute", value.toString());
-        this.setState({"preferredRoute": value});
-    //alert (value.toString());
+    this.setState({"preferredRoute": value});
   }
+
   _onSaveRoute() {
-    console.log("hey");
     AsyncStorage.setItem("preferredRoute", this.state.preferredRoute.toString());
-    // this.props.navigator.switchToTab({
-    //   tabIndex: 0
-    // });
+    this.props.dispatch(storedRouteActions.storeRoute(this.state.preferredRoute.toString()));
+    this.props.navigator.switchToTab({
+      tabIndex: 0
+    });
+
   } 
 }
 
 
+// TODO:  All sorts of tabbing and bracket situation going on below.
 var styles = StyleSheet.create({
     container: {
         flex: 1,   
@@ -138,3 +171,10 @@ var styles = StyleSheet.create({
 
 });
 
+function mapStateToProps(state){
+  return {
+    storedRoute: state.storedRoute
+  };
+}
+
+export default connect(mapStateToProps)(SecondTabScreen);

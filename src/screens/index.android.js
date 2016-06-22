@@ -10,9 +10,9 @@ import SecondTabScreen from './SecondTabScreen';
 // import SideMenu from './SideMenu';
 
 // register all screens of the app (including internal ones)
-export function registerScreens() {
-  Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen);
-  Navigation.registerComponent('example.SecondTabScreen', () => SecondTabScreen);
+export function registerScreens(store, Provider) {
+  Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen, store, Provider);
+  Navigation.registerComponent('example.SecondTabScreen', () => SecondTabScreen, store, Provider);
   // Navigation.registerComponent('example.ThirdTabScreen', () => ThirdTabScreen);
   // Navigation.registerComponent('example.PushedScreen', () => PushedScreen);
   // Navigation.registerComponent('example.StyledScreen', () => StyledScreen);
