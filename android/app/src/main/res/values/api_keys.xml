@@ -1,0 +1,3 @@
+<resources>
+    <string name="GoogleMapsKey">{{API KEY HERE}}</string>
+</resources>

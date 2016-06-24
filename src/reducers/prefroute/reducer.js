@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
-  root: undefined // 'login' / 'after-login'
+  root: undefined 
 });
 
 export default function app(state = initialState, action = {}) {
